@@ -1,0 +1,21 @@
+{
+  "name": "discordbot",
+  "version": "0.1.0",
+  "description": "",
+  "main": "bot.js",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^8.2.0",
+    "nedb": "^1.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "node ./src/bot.js",
+    "dev": "nodemon ./src/bot.js"
+  },
+  "keywords": [],
+  "author": "Gannon Burks",
+  "license": "LGPL-3.0"
+}
