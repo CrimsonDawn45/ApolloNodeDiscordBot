@@ -31,6 +31,13 @@ echo.execute = (sender, channel, args) => {
 }
 handler.register(echo);
 
+//Register repo command
+var repo = new command.Command('repo','shows link to discord bot github repo',`${prefix}repo`)
+repo.execute = (sender, channel, args) => {
+    channel.send('https://github.com/CrimsonDawn45/ApolloSurvivalDiscordBot')
+}
+handler.register(repo)
+
 //Register help command
 var help = new command.Command('help','help command',`${prefix}help || ${prefix}help <command>`)
 help.execute = (sender, channel, args) => {
