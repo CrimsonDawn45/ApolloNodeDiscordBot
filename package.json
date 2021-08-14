@@ -5,8 +5,8 @@
   "main": "bot.js",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "dotenv": "^8.2.0",
-    "nedb": "^1.8.0"
+    "distube": "^2.8.15",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
@@ -17,5 +17,5 @@
   },
   "keywords": [],
   "author": "Gannon Burks",
-  "license": "LGPL-3.0"
+  "license": "LGPL-2.1"
 }

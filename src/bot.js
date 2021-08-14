@@ -1,84 +1,54 @@
-const discord = require('discord.js');
-const command = require('./command.js');
-
-//Grab Token
+const fs = require('fs')
+const path = require('path')
 require('dotenv').config();
-const token = process.env.DISCORD_BOT_TOKEN;
-const prefix = process.env.DISCORD_BOT_EXECUTION_PREFIX;
 
-//Create client instance
-const client = new discord.Client()
+/**
+ * Create Main Object
+ */
+var bot = {
+    token: process.env.DISCORD_BOT_TOKEN,
+    prefix: process.env.DISCORD_BOT_PREFIX,
+    services: []
+};
 
-//Create CommandExecutor instance
-const handler = new command.CommandHandler(prefix)
+console.log('Grabbed Environment vars!\n')
 
-//Register ping command
-var ping = new command.Command('ping','A nice little test command',`${prefix}ping`)
-ping.execute = (sender, channel, args) => {
-    channel.send('Pong!')
-}
-handler.register(ping);
+/**
+ * STARTUP SERVICES!!!
+ */
+let serviceDir = path.join(__dirname, './services')
 
-//Register echo command
-var echo = new command.Command('echo','repeats whatever you say',`${prefix}echo <message>`)
-echo.execute = (sender, channel, args) => {
+console.log('Loading Services...')
+console.log('----------------------------')
 
-    if(args != undefined) {
-        channel.send(args.join(' '))
-    } else {
-        channel.send('Message cannot be empty.')
+let services = fs.readdirSync(serviceDir);
+
+services.forEach(service => {
+
+    console.log(`Found service file: ${service}`)
+
+    //Load a service
+    let loadedService = undefined;
+
+    try {
+        loadedService = require('./services/' + service)
+    } catch (error) {
+        console.log(`\nFile \".\\services\\${service}\" is not a valid nodejs module!!!\n`)
+        process.exit(0);
     }
-}
-handler.register(echo);
 
-//Register repo command
-var repo = new command.Command('repo','shows link to discord bot github repo',`${prefix}repo`)
-repo.execute = (sender, channel, args) => {
-    channel.send('https://github.com/CrimsonDawn45/ApolloSurvivalDiscordBot')
-}
-handler.register(repo)
+    //Append to service list
+    bot.services[loadedService.service.id] = loadedService
 
-//Register help command
-var help = new command.Command('help','help command',`${prefix}help || ${prefix}help <command>`)
-help.execute = (sender, channel, args) => {
-
-    if(args == undefined) {
-
-        let cmdList = "List of Commands:\n```";
-
-        handler.commands.forEach(command => {
-            cmdList = cmdList + '\n' + command.label + ': ' + command.description;
-        });
-
-        cmdList = cmdList + `\`\`\`Use "${prefix}help <command>" to see command usage.`;
-
-        channel.send(cmdList);
-
-    } else {
-
-        let label = args[0].toLowerCase();
-
-        if(handler.getCommand(label) != undefined) {
-            cmd = handler.getCommand(label);
-
-            channel.send(`"${label}" Usage: \`${cmd.usage}\``);
-
-        } else {
-
-            channel.send(`"${label}" is not a valid command.`)
-        }
-    }
-}
-handler.register(help);
-
-client.on('ready', () => {
-    console.log('I am ready');
+    //Log That service is loaded
+    console.log('   loaded service: \"' + loadedService.service.id + '\"\n')
 })
 
-client.on('message', (msg) => {
-    if(!msg.author.bot) {
-        handler.handleCommand(msg.author, msg.channel, msg.content);
-    }
-})
+bot.services['discord'].service.start(bot, () => {
+    bot.services['music'].service.start(bot, () => {
+        bot.services['command'].service.start(bot);
+    });
+});
 
-client.login(token)
+//TODO: fix start service function
+//init.StartServices(bot);
