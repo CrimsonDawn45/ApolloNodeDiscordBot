@@ -16,9 +16,10 @@ module.exports.service = {
             `**Added to Queue** \`${song.name}\`** - **\`${song.formattedDuration}\`, Queued by: ${song.user}.`
         ));
 
-        //Turn Off Autoplay by Default
-        bot.music.on('initQueue', (queue) => {
-            queue.autoplay = false;
+        //Autoplay no next song event
+        bot.music.on('noRelated', (message) => {
+            message.channel.send('**Couldn\'t find another related song, Stopping music.**')
+            bot.music.stop(message)
         });
 
         this.service.ready = true;
