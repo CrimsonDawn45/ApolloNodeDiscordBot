@@ -11,22 +11,22 @@ class CommandHandler {
         this.commands = [];
 
         //Automatically register commands
-        let cmdDir = path.join(__dirname, 'commands')
+        let cmdDir = path.join(__dirname, '../commands')
 
-        fs.readdir(cmdDir, (err, files) => {
-            files.forEach(file => {
-                this.commands.push(require('./commands/' + file))
-            });
+        let files = fs.readdirSync(cmdDir)
+
+        files.forEach(file => {
+            this.commands.push(require('../commands/' + file))
         });
     }
 
     handleCommand(message) {
 
-        console.log(`User ${message.author.name} issued command \"${message.content}\"`)
-
         let words = message.content.trim().split(' ');
 
-        if(words[0].startsWith(this.bot.prefix)) {  //Check for command
+        if(words[0].startsWith(this.bot.prefix) && !message.author.bot) {  //Check for command
+
+            console.log(`User ${message.author.username} issued command \"${message.content}\"`)
 
             let name = words[0].toLowerCase().replace(this.bot.prefix,'');
             let args = undefined;

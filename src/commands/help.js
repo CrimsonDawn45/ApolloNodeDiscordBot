@@ -11,8 +11,8 @@ module.exports.command = {
     
             let cmdList = "List of Commands:\n```";
     
-            bot.handler.commands.forEach(command => {
-                cmdList = cmdList + '\n' + command.config.name + ': ' + command.config.description;
+            bot.command.commands.forEach(command => {
+                cmdList = cmdList + '\n' + command.command.name + ': ' + command.command.description;
             });
     
             cmdList = cmdList + `\`\`\`Use "${bot.prefix}help <command>" to see command usage.`;
@@ -23,8 +23,8 @@ module.exports.command = {
     
             let name = args[0].toLowerCase();
     
-            if(bot.handler.getCommand(name) != undefined) {
-                cmd = bot.handler.getCommand(name);
+            if(bot.command.getCommand(name) != undefined) {
+                cmd = bot.command.getCommand(name);
     
                 channel.send(`"${name}" Usage: \`${bot.prefix}${cmd.config.usage}\``);
     

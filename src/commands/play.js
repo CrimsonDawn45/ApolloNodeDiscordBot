@@ -8,7 +8,7 @@ module.exports.command = {
         let song = args.join(' ');
 
         if(args != undefined) {
-            music.play(message, song)
+            bot.music.play(message, song)
         } else {
             channel.send('Song name cannot be empty!')
         }

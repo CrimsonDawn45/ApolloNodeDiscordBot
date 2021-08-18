@@ -38,17 +38,12 @@ services.forEach(service => {
     }
 
     //Append to service list
-    bot.services[loadedService.service.id] = loadedService
+    bot.services[loadedService.service.id] = loadedService.service
 
     //Log That service is loaded
     console.log('   loaded service: \"' + loadedService.service.id + '\"\n')
 })
 
-bot.services['discord'].service.start(bot, () => {
-    bot.services['music'].service.start(bot, () => {
-        bot.services['command'].service.start(bot);
-    });
-});
-
-//TODO: fix start service function
-//init.StartServices(bot);
+bot.services['discord'].start(bot)
+bot.services['music'].start(bot)
+bot.services['command'].start(bot)
