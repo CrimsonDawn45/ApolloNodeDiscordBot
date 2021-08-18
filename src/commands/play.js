@@ -1,6 +1,5 @@
 module.exports.command = {
     name: 'play',
-    aliases: ['p'],
     description: 'plays music',
     usage: ['play <song name>','play <url>'],
     execute: async (bot, message, args) => {

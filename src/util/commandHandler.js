@@ -15,8 +15,27 @@ class CommandHandler {
 
         let files = fs.readdirSync(cmdDir)
 
+        console.log('Loading Commands...')
+        console.log('----------------------------')
+
         files.forEach(file => {
-            this.commands.push(require('../commands/' + file))
+
+            console.log(`Found command file: ${file}`)
+
+            //Load Command
+            let loadedCommand = undefined;
+
+            //Try to parse file
+            try {
+                loadedCommand = require('../commands/' + file).command
+            } catch (error) {
+                console.log(`\nFile \".\\commands\\${file}\" is not a valid nodejs module!!!\n`)
+                process.exit(0);
+            }
+
+            //Append command to list
+            this.commands.push(loadedCommand);
+            console.log(`   loaded command: \"${file}\"\n`)
         });
     }
 
@@ -26,7 +45,7 @@ class CommandHandler {
 
         if(words[0].startsWith(this.bot.prefix) && !message.author.bot) {  //Check for command
 
-            console.log(`User ${message.author.username} issued command \"${message.content}\"`)
+            console.log(`[command] User ${message.author.username} issued command \"${message.content}\"`)
 
             let name = words[0].toLowerCase().replace(this.bot.prefix,'');
             let args = undefined;
@@ -36,25 +55,28 @@ class CommandHandler {
                 args.shift()
             }
 
-            let command = this.getCommand(name)
+            let command = this.getCommand(name, message)
             if(command != undefined) {
-                command.command.execute(this.bot, message, args);
+                command.execute(this.bot, message, args);
             } else {
                 message.channel.send(`"${name}" is not a valid command.`)
             }
         }
     }
 
-    getCommand(name) {
-        let cmd = undefined;
+    getCommand(name, message) {
+        let result = undefined;
 
         this.commands.forEach(command => {
-            if(command.command.name == name) {
-                cmd = command;
+
+            if(command != undefined) {
+                if(command.name == name) {  //TODO: make it check for aliases
+                    result = command;
+                }
             }
         });
 
-        return cmd;
+        return result;
     }
 }
 

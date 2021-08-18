@@ -6,13 +6,21 @@ module.exports.service = {
     start: async(bot) => {
         bot.music = new DisTube(bot.discord, { searchSongs: false, emitNewSongOnly: true})
 
-        //TODO: Setup Music Bot Events
+        //Playing Song Event
         bot.music.on('playSong', (message, queue, song) => message.channel.send(
-            `**Now Playing** \`${song.name}\`** - **\`${song.formattedDuration}\`
-           \nRequested by: ${song.user}.`
+            `**Now Playing** \`${song.name}\`** - **\`${song.formattedDuration}\`, Requested by: ${song.user}.`
         ));
 
-        //TODO: Make it actually detect when distube client is done loading!
+        //Add Song to Queue event
+        bot.music.on('addSong', (message, queue, song) => message.channel.send(
+            `**Added to Queue** \`${song.name}\`** - **\`${song.formattedDuration}\`, Queued by: ${song.user}.`
+        ));
+
+        //Turn Off Autoplay by Default
+        bot.music.on('initQueue', (queue) => {
+            queue.autoplay = false;
+        });
+
         this.service.ready = true;
     },
     stop: async(bot) => {}
