@@ -44,6 +44,9 @@ services.forEach(service => {
     console.log('   loaded service: \"' + loadedService.service.id + '\"\n')
 })
 
+/**
+ * TODO: make this less dumb by writing something to actually automatically figure out the load order.
+ */
 bot.services['discord'].start(bot)
 bot.services['music'].start(bot)
 bot.services['command'].start(bot)

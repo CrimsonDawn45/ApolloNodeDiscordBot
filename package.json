@@ -1,12 +1,16 @@
 {
   "name": "discordbot",
   "version": "0.1.0",
-  "description": "",
+  "description": "a modular discord bot built to be easy to extend.",
+  "repository": "https://github.com/CrimsonDawn45/ApolloNodeDiscordBot",
   "main": "bot.js",
   "dependencies": {
+    "@discordjs/opus": "^0.5.3",
+    "@distube/youtube-dl": "^2.2.2",
     "discord.js": "^12.5.3",
     "distube": "^2.8.18",
-    "dotenv": "^8.6.0"
+    "dotenv": "^8.6.0",
+    "ffmpeg-static": "^4.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

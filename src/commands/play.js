@@ -1,16 +1,18 @@
 module.exports.command = {
     name: 'play',
+    aliases: ['p'],
     description: 'plays music',
     usage: ['play <song name>','play <url>'],
     execute: async (bot, message, args) => {
 
-        let channel = message.channel;
-        let song = args.join(' ');
+        if(!message.member.voice.channel) return message.channel.send('**You must be in a voice channel to use that.**')
+
+        let song = args.join(' ').trim();
 
         if(args != undefined) {
             bot.music.play(message, song)
         } else {
-            channel.send('Song name cannot be empty!')
+            message.channel.send('Song name cannot be empty!')
         }
     }
 }

@@ -3,7 +3,16 @@ module.exports.command = {
     description: 'immediately stops any music being played',
     usage: ['stop'],
     execute: async (bot, message, args) => {
-        bot.music.stop(message) 
-        message.channel.send('Stopped music!');
+
+        if(!message.member.voice.channel) return message.channel.send('**You must be in a voice channel to use that.**')
+
+        let queue = await bot.music.getQueue(message);
+
+        if(queue) {
+            bot.music.stop(message);
+            message.channel.send('**Stopped all music.**')
+        } else if(!queue) {
+            message.channel.send('**There is nothing playing.**')
+        }
     }
 }
