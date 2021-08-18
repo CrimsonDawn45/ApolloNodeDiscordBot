@@ -20,7 +20,7 @@ class CommandHandler {
 
         files.forEach(file => {
 
-            console.log(`Found command file: ${file}`)
+            console.log(`Found command file: \"${file}\"`)
 
             //Load Command
             let loadedCommand = undefined;
@@ -35,7 +35,7 @@ class CommandHandler {
 
             //Append command to list
             this.commands.push(loadedCommand);
-            console.log(`   loaded command: \"${file}\"\n`)
+            console.log(`   loaded command: ${file}\n`)
         });
     }
 
@@ -55,7 +55,7 @@ class CommandHandler {
                 args.shift()
             }
 
-            let command = this.getCommand(name, message)
+            let command = this.getCommand(name)
             if(command != undefined) {
                 command.execute(this.bot, message, args);
             } else {
@@ -64,16 +64,24 @@ class CommandHandler {
         }
     }
 
-    getCommand(name, message) {
+    getCommand(name) {
+
         let result = undefined;
 
         this.commands.forEach(command => {
 
-            if(command != undefined) {
-                if(command.name == name) {  //TODO: make it check for aliases
-                    result = command;
-                }
+            if(command.name == name) {  //Check full name
+                result = command;
             }
+
+            if(command.aliases != undefined) {  //Check aliases
+                command.aliases.forEach(alias => {
+                    if(alias == name) {
+                        result = command;
+                    }
+                });
+            }
+            
         });
 
         return result;
