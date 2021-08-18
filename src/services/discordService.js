@@ -2,7 +2,6 @@ const Discord = require('discord.js')
 
 module.exports.service = {
     id: 'discord',
-    depends: [],
     start: async(bot) => {
         //Create bot instance
         bot.discord = new Discord.Client()
