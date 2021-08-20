@@ -1,5 +1,4 @@
-const fs = require('fs')
-const path = require('path')
+const init = require('./util/init')
 require('dotenv').config();
 
 /**
@@ -10,39 +9,10 @@ var bot = {
     prefix: process.env.DISCORD_BOT_PREFIX,
     services: []
 };
-
 console.log('Grabbed Environment vars!\n')
 
-/**
- * STARTUP SERVICES!!!
- */
-let serviceDir = path.join(__dirname, './services')
-
-console.log('Loading Services...')
-console.log('----------------------------')
-
-let services = fs.readdirSync(serviceDir);
-
-services.forEach(service => {
-
-    console.log(`Found service file: ${service}`)
-
-    //Load a service
-    let loadedService = undefined;
-
-    try {
-        loadedService = require('./services/' + service)
-    } catch (error) {
-        console.log(`\nFile \".\\services\\${service}\" is not a valid nodejs module!!!\n`)
-        process.exit(0);
-    }
-
-    //Append to service list
-    bot.services[loadedService.service.id] = loadedService.service
-
-    //Log That service is loaded
-    console.log('   loaded service: \"' + loadedService.service.id + '\"\n')
-})
+//Load Services
+init.loadServices(bot);
 
 /**
  * TODO: make this less dumb by writing something to actually automatically figure out the load order.

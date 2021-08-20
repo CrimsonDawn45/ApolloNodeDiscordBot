@@ -7,6 +7,10 @@ class CommandHandler {
     commands;
 
     constructor(bot) {
+        this.loadCommands(bot);
+    }
+
+    loadCommands(bot) {
         this.bot = bot;
         this.commands = [];
 
@@ -28,14 +32,15 @@ class CommandHandler {
             //Try to parse file
             try {
                 loadedCommand = require('../commands/' + file).command
-            } catch (error) {
-                console.log(`\nFile \".\\commands\\${file}\" is not a valid nodejs module!!!\n`)
-                process.exit(0);
-            }
 
-            //Append command to list
-            this.commands.push(loadedCommand);
-            console.log(`   loaded command: ${file}\n`)
+                //Append command to list
+                this.commands.push(loadedCommand);
+                console.log(`   loaded command: ${file}\n`)
+
+            } catch (error) {
+
+                console.log(`\nFile \".\\commands\\${file}\" failed to be imported!, Skipping file!\n`) //Make it ignore bad files and keep going
+            }
         });
     }
 

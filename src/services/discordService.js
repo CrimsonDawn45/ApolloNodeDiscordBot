@@ -23,7 +23,12 @@ module.exports.service = {
         });
 
         //Try Login
-        bot.discord.login(bot.token);
+        try {
+            bot.discord.login(bot.token);   
+        } catch (error) {
+            console.log('[discord] FAILED TO LOGIN!!!, Aborting startup!')
+            process.exit(0);
+        }
     },
     stop: async(bot) => {
         bot.discord.destroy();

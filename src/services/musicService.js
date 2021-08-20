@@ -24,5 +24,7 @@ module.exports.service = {
 
         this.service.ready = true;
     },
-    stop: async(bot) => {}
+    stop: async(bot) => {
+        bot.music.destroy();
+    }
 }
