@@ -14,9 +14,9 @@ module.exports.service = {
         //Add Song to Queue event
         bot.music.on('addSong', (message, queue, song) => {
             if(song.user.bot == false) {
-                `**Added to Queue** \`${song.name}\`** - **\`${song.formattedDuration}\`, Queued by: ${song.user}.`
+                message.channel.send( `**Added to Queue** \`${song.name}\`** - **\`${song.formattedDuration}\`, Queued by: ${song.user}.`)
             } else {
-                `**Autoplaying Song \"${song.name}\"** - **\'${song.formattedDuration}\'.`
+                message.channel.send(`**Autoplaying Song \"${song.name}\"** - **\'${song.formattedDuration}\'.`)
             }
         });
 
