@@ -1,6 +1,7 @@
 module.exports.command = {
     name: 'stop',
     description: 'immediately stops any music being played',
+    permissions: ['dj'],
     usage: ['stop'],
     execute: async (bot, message, args) => {
 

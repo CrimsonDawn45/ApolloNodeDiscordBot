@@ -1,6 +1,7 @@
 module.exports.command = {
     name: 'jump',
     description: 'jumps to a song in the queue',
+    permissions: ['dj'],
     usage: ['jump <song number>'],
     execute: async (bot, message, args) => {
 
