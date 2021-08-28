@@ -11,6 +11,7 @@ module.exports.service = {
             bot.command.handleCommand(message)
         });
 
+        /*
         //Handle Guilds
         bot.discord.on('guildCreate', (guild) => {
             bot.command.permHandler.registerGuild(guild);
@@ -28,6 +29,7 @@ module.exports.service = {
         bot.discord.on('roleDelete', (role) => {
             bot.command.permHandler.deRegisterRole(role);
         });
+        */
 
         this.service.ready = true;  //This whole service is just a CommandHandler instance so just telling the serviceHandler that everything is all good should be fine.
     },

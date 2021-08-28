@@ -1,16 +1,16 @@
 const fs = require('fs')
 const path = require('path')
-const {PermissionHandler} = require('../util/permissionHandler')
+//const {PermissionHandler} = require('../util/permissionHandler')
 
 class CommandHandler {
 
     bot;
-    permHandler;
+    //permHandler;
     commands;
 
     constructor(bot) {
         this.loadCommands(bot);
-        this.permHandler = new PermissionHandler(bot, this.commands);
+       // this.permHandler = new PermissionHandler(bot, this.commands);
     }
 
     loadCommands(bot) {
