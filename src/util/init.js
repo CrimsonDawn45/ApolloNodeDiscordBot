@@ -29,6 +29,7 @@ function loadServices(bot) {
         } catch (error) {
             
             console.log(`\nFile \".\\services\\${service}\" failed to be imported!, Skipping file!\n`) //Make it ignore bad files and keep going
+            console.log(error)
         }
     })
 }

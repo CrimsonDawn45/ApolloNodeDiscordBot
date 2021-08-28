@@ -4,18 +4,14 @@ const path = require('path')
 
 class CommandHandler {
 
-    bot;
-    //permHandler;
-    commands;
-
     constructor(bot) {
         this.loadCommands(bot);
        // this.permHandler = new PermissionHandler(bot, this.commands);
     }
 
     loadCommands(bot) {
-        this.bot = bot;
-        this.commands = [];
+        this.bot = bot
+        this.commands = []
 
         //Automatically register commands
         let cmdDir = path.join(__dirname, '../commands')

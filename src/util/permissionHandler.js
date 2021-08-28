@@ -2,9 +2,6 @@ const {Datastore} = require('@yetzt/nedb')
 
 class PermissionHandler {
 
-    bot;
-    permDb;
-
     constructor(bot, commands) {
         this.bot = bot;
         this.permDb = new Datastore({ filename: '../../db/permissions.db', autoload: true})
