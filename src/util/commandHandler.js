@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const PermissionHandler = require('../util/permissionHandler')
+const {PermissionHandler} = require('../util/permissionHandler')
 
 class CommandHandler {
 

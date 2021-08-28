@@ -1,27 +1,39 @@
-const nedb = require('@yetzt/nedb')
+const {Datastore} = require('@yetzt/nedb')
 
 class PermissionHandler {
 
     bot;
-    permSet;
+    permDb;
 
     constructor(bot, commands) {
         this.bot = bot;
-        this.permSet = new Set();
+        this.permDb = new Datastore({ filename: '../../db/permissions.db', autoload: true})
+    }
 
-        commands.forEach(command => {
+    registerGuild(guild) {
+        let guild = {
+            id: guild.id,
+            roles: guild.roles.fetch()
+        }
+    }
 
-            if(command.permissions != undefined) {
+    deRegisterGuild(guild) {
 
-                command.permissions.forEach(permission => {
-                    this.permSet.add(permission);
-                })
-            }
-        })
+    }
+
+    registerRole(role) {
+        let role = {
+            id: role.id,
+            permissions: []
+        }
+    }
+    
+    deRegisterRole(role) {
+
     }
 
     isAdmin(guildMember) {
-
+        guildMember.permissions
     }
 }
 
